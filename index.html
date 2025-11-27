@@ -8,7 +8,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 800px;
+      max-width: 900px;
       margin: 40px auto;
       padding: 0 20px;
       line-height: 1.6;
@@ -21,25 +21,37 @@
       margin-bottom: 20px;
     }
 
-    .links a {
+    .categories {
+      display: flex;
+      justify-content: space-around; /* categories side by side */
+      margin-top: 30px;
+      gap: 20px;
+    }
+
+    .category {
+      display: flex;
+      flex-direction: column; /* links stacked vertically */
+      align-items: center;
+    }
+
+    .category a {
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 8px;
       margin: 8px 0;
       padding: 8px 14px;
       border-radius: 6px;
       background: #eee;
       text-decoration: none;
       color: #333;
-      gap: 8px;
     }
 
-    .links a:hover {
+    .category a:hover {
       background: #ccc;
     }
 
     h2 {
-      margin-top: 30px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -48,20 +60,22 @@
     <img src="https://github.com/Glitchstitcher/glitchstitcher.github.io/blob/main/logo2Second.png?raw=true" alt="My Logo">
   </div>
 
-  <h2>Socials</h2>
-  <div class="links">
-    <a href="https://www.instagram.com/glitchstitcher/" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
-    <a href="https://github.com/glitchstitcher" target="_blank"><i class="fab fa-github"></i>GitHub</a>
-  </div>
+  <div class="categories">
+    <div class="category">
+      <h2>Socials</h2>
+      <a href="https://www.instagram.com/glitchstitcher/" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+      <a href="https://github.com/glitchstitcher" target="_blank"><i class="fab fa-github"></i>GitHub</a>
+    </div>
 
-  <h2>Donations</h2>
-  <div class="links">
-    <a href="https://ko-fi.com/glitchstitcher" target="_blank"><i class="fas fa-coffee"></i>Ko-Fi</a>
-  </div>
+    <div class="category">
+      <h2>Donations</h2>
+      <a href="https://ko-fi.com/glitchstitcher" target="_blank"><i class="fas fa-coffee"></i>Ko-Fi</a>
+    </div>
 
-  <h2>Resources</h2>
-  <div class="links">
-    <a href="mailto:glitchstitcher@gmail.com"><i class="fas fa-envelope"></i>Email</a>
+    <div class="category">
+      <h2>Resources</h2>
+      <a href="mailto:glitchstitcher@gmail.com"><i class="fas fa-envelope"></i>Email</a>
+    </div>
   </div>
 
 </body>
