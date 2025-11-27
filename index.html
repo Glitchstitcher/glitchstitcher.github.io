@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Links</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -20,13 +22,16 @@
     }
 
     .socials a {
-      display: inline-block;
-      margin: 0 8px 8px;
+      display: flex;               /* horizontal icon + text */
+      align-items: center;
+      justify-content: center;
+      margin: 8px 0;
       padding: 8px 14px;
       border-radius: 6px;
       background: #eee;
       text-decoration: none;
       color: #333;
+      gap: 8px;                    /* space between icon and text */
     }
 
     .socials a:hover {
@@ -45,10 +50,10 @@
 
   <h2>Social Links</h2>
   <div class="socials">
-    <a href="https://github.com/glitchstitcher" target="_blank">GitHub</a>
-    <a href="https://www.instagram.com/glitchstitcher/" target="_blank">Instagram</a>
-    <a href="https://ko-fi.com/glitchstitcher" target="_blank">Ko-Fi</a>
-    <a href="mailto:glitchstitcher@gmail.com">Email</a>
+    <a href="https://github.com/glitchstitcher" target="_blank"><i class="fab fa-github"></i>GitHub</a>
+    <a href="https://www.instagram.com/glitchstitcher/" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+    <a href="https://ko-fi.com/glitchstitcher" target="_blank"><i class="fas fa-coffee"></i>Ko-Fi</a>
+    <a href="mailto:glitchstitcher@gmail.com"><i class="fas fa-envelope"></i>Email</a>
   </div>
 
 </body>
