@@ -64,9 +64,18 @@
     <div class="category">
       <h2>Socials</h2>
       <a href="https://www.instagram.com/glitchstitcher/" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
-      <a href="#" onclick="navigator.clipboard.writeText('glitchstitcher@gmail.com'); alert('Email copied!'); return false;">
+      <a href="#" onclick="copyEmail(); return false;">
         <i class="fas fa-envelope"></i> Email
         </a>
+        <span id="copy-msg" style="display:none; margin-left:6px; color:green;">Copied!</span>
+        <script>
+        function copyEmail() {
+        navigator.clipboard.writeText('glitchstitcher@gmail.com');
+        const msg = document.getElementById('copy-msg');
+        msg.style.display = 'inline';
+        setTimeout(() => { msg.style.display = 'none'; }, 1500);
+        }
+        </script>
     </div>
 
     <div class="category">
