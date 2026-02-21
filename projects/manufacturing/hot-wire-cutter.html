@@ -1,11 +1,28 @@
-<script>
-  const password = "1234";   // change this
-  const user = prompt("Enter password:");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hot Wire Cutter</title>
 
-  if (user !== password) {
-    document.body.innerHTML = "";
-    alert("Wrong password");
-  }
-</script>
+  <script>
+    if (prompt("Enter password:") !== "1234") {
+      window.location.href = "index.html";
+    }
+  </script>
 
-temp
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Hot Wire Cutter</h1>
+  <p>This is the protected page content.</p>
+</body>
+</html>
