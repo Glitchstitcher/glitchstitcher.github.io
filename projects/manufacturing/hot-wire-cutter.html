@@ -5,8 +5,31 @@
   <title>Hot Wire Cutter</title>
 
   <script>
-    if (prompt("Enter password:") !== "1234") {
-      window.location.href = "index.html";
+    function setCookie(name, value, days) {
+      const d = new Date();
+      d.setTime(d.getTime() + (days*24*60*60*1000));
+      document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/";
+    }
+
+    function getCookie(name) {
+      const cname = name + "=";
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const ca = decodedCookie.split(';');
+      for(let i = 0; i < ca.length; i++) {
+        let c = ca[i].trim();
+        if (c.indexOf(cname) == 0) {
+          return c.substring(cname.length, c.length);
+        }
+      }
+      return "";
+    }
+
+    if (getCookie("hotwire_auth") !== "true") {
+      if (prompt("Enter password:") === "1234") {
+        setCookie("hotwire_auth", "true", 30); // 30 days
+      } else {
+        window.location.href = "index.html";
+      }
     }
   </script>
 
@@ -23,7 +46,6 @@
 
 <body>
   <h1>Hot Wire Cutter</h1>
-  <p>This is the protected page content.
-  temp</p>
+  <p>This page stays unlocked for 30 days.</p>
 </body>
 </html>
