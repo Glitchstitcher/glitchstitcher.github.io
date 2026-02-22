@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlitchStitcher</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .logo img {
+      max-width: 180px;
+      height: auto;
+      margin-bottom: 6px;
+    }
+
+    .categories {
+      display: flex;
+      justify-content: space-around; /* categories side by side */
+      margin-top: 15px;
+      gap: 20px;
+    }
+
+    .category {
+      display: flex;
+      flex-direction: column; /* links stacked vertically */
+      align-items: center;
+    }
+
+    .category a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 8px 0;
+      padding: 8px 14px;
+      border-radius: 6px;
+      background: #eee;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .category a:hover {
+      background: #ccc;
+    }
+
+    h2 {
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <img src="https://github.com/Glitchstitcher/glitchstitcher.github.io/blob/main/images/icons/logo2Second.png?raw=true" alt="My Logo">
+  </div>
+
+  <div class="categories">
+    <div class="category">
+      <h2>Socials</h2>
+      <a href="https://www.instagram.com/glitchstitcher/" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+      <a href="https://rumble.com/user/Glitchstitcher" target="_blank">
+        <img src="https://github.com/Glitchstitcher/glitchstitcher.github.io/blob/main/images/icons/rumble%20icon.png?raw=true" alt="Rumble" style="width:16px; height:16px; margin-right:8px;">Rumble
+        </a>
+      <a href="https://www.youtube.com/@glitchstitcher" target="_blank"><i class="fab fa-youtube"></i>Youtube</a>
+      <a href="#" onclick="copyEmail(); return false;">
+        <i class="fas fa-envelope"></i> Email
+        </a>
+        <span id="copy-msg" style="display:none; margin-left:6px; color:green;">Copied!</span>
+        <script>
+        function copyEmail() {
+        navigator.clipboard.writeText('glitchstitcher@gmail.com');
+        const msg = document.getElementById('copy-msg');
+        msg.style.display = 'inline';
+        setTimeout(() => { msg.style.display = 'none'; }, 1500);
+        }
+        </script>
+    </div>
+
+    <div class="category">
+      <h2>Products</h2>
+      <a href="https://ko-fi.com/glitchstitcher" target="_blank"><i class="fas fa-coffee"></i>Ko-Fi</a>
+      <a href="https://www.patreon.com/cw/Glitchstitcher" target="_blank">
+        <img src="https://github.com/Glitchstitcher/glitchstitcher.github.io/blob/main/images/icons/patreon%20icon.png?raw=true" alt="Patreon" style="width:16px; height:16px; margin-right:8px;">Patreon
+        </a>
+    </div>
+
+    <div class="category">
+      <h2>Resources</h2>
+      <a href="https://github.com/glitchstitcher" target="_blank"><i class="fab fa-github"></i>GitHub</a>
+    </div>
+  </div>
+<div style="margin-top:40px;">
+  <a href="projects.html" style="
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:6px;
+    background:#eee;
+    text-decoration:none;
+    color:#333;
+  ">
+    <i class="fas fa-folder"></i> Projects
+  </a>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin</title>
+
+  <!-- Optional: protect this page too -->
+  <script src="/admin/auth.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 60px auto;
+      text-align: center;
+    }
+
+    button, a {
+      display: inline-block;
+      padding: 10px 18px;
+      font-size: 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin: 10px 5px;
+      background: #eee;
+      color: #000;
+      cursor: pointer;
+    }
+
+    button:hover, a:hover {
+      background: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Admin Panel</h1>
+  <p>Reset site authentication cookie.</p>
+
+  <button onclick="resetAuth()">Reset Site Login</button>
+  <a href="/index.html">Back to Home</a>
+
+  <script>
+    function resetAuth() {
+      document.cookie = "site_auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      alert("Login reset. You will need to enter the password again.");
+    }
+  </script>
+</body>
+</html>
