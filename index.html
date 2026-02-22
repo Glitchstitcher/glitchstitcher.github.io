@@ -26,6 +26,12 @@
       justify-content: space-around; /* categories side by side */
       margin-top: 15px;
       gap: 20px;
+      flex-wrap: wrap; /* wrap on narrow screens */
+    }
+    
+    @media (max-width: 520px) {
+      .categories { gap: 12px; }
+      .category a { padding: 8px 10px; }
     }
 
     .category {
@@ -64,22 +70,16 @@
     <div class="category">
       <h2>Socials</h2>
       <a href="https://www.instagram.com/glitchstitcher/" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
-      <a href="https://rumble.com/user/Glitchstitcher" target="_blank">
+      <!-- add rel for security -->
+      <a href="https://rumble.com/user/Glitchstitcher" target="_blank" rel="noopener noreferrer">
         <img src="https://github.com/Glitchstitcher/glitchstitcher.github.io/blob/main/images/icons/rumble%20icon.png?raw=true" alt="Rumble" style="width:16px; height:16px; margin-right:8px;">Rumble
         </a>
-      <a href="https://www.youtube.com/@glitchstitcher" target="_blank"><i class="fab fa-youtube"></i>Youtube</a>
-      <a href="#" onclick="copyEmail(); return false;">
+      <a href="https://www.youtube.com/@glitchstitcher" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i>Youtube</a>
+      <a href="#" onclick="copyEmail(); return false;" aria-label="Copy email to clipboard">
         <i class="fas fa-envelope"></i> Email
         </a>
-        <span id="copy-msg" style="display:none; margin-left:6px; color:green;">Copied!</span>
-        <script>
-        function copyEmail() {
-        navigator.clipboard.writeText('glitchstitcher@gmail.com');
-        const msg = document.getElementById('copy-msg');
-        msg.style.display = 'inline';
-        setTimeout(() => { msg.style.display = 'none'; }, 1500);
-        }
-        </script>
+        <span id="copy-msg" style="display:none; margin-left:6px; color:green;" aria-live="polite">Copied!</span>
+<!-- move script to end of body -->
     </div>
 
     <div class="category">
@@ -104,8 +104,17 @@
     text-decoration:none;
     color:#333;
   ">
-    <i class="fas fa-folder"></i> Projects
+    <i class="fas fa-folder"></i> Portfolio
   </a>
 </div>
 </body>
+<script>
+function copyEmail() {
+  navigator.clipboard.writeText('glitchstitcher@gmail.com').then(() => {
+    const msg = document.getElementById('copy-msg');
+    msg.style.display = 'inline';
+    setTimeout(() => { msg.style.display = 'none'; }, 1500);
+  });
+}
+</script>
 </html>
