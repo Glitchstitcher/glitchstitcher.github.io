@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+
+    <!-- Header CSS -->
+    <link rel="stylesheet" href="/common/header.css">
+
+    <!-- Optional other CSS -->
+    <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+    <!-- Placeholder for the common header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Page content -->
+    <div class="admin-content">
+        <h1>Test Page</h1>
+        <p>This page uses the common header loaded via JS.</p>
+    </div>
+
+    <!-- JS to load header.html -->
+    <script>
+        fetch('/common/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(err => console.error('Failed to load header:', err));
+    </script>
+
+</body>
+</html>
