@@ -10,11 +10,16 @@ const PASSWORD_PAGE_TEXT = {
 // --- Password Logic ---
 let PASSWORD_HASH = null;
 
-// Disable unlock button until password loads
+// Disable unlock buttons until password loads
 document.querySelectorAll('.unlock-btn').forEach(btn => btn.disabled = true);
 
+// Determine correct path to password.json
+let passwordPath = window.location.pathname.includes('/portfolio/')
+    ? '../admin/password.json'   // portfolio folder
+    : 'password.json';           // admin folder
+
 // Load password hash
-fetch('admin/password.json')
+fetch(passwordPath)
     .then(response => response.json())
     .then(data => {
         PASSWORD_HASH = data.password;
@@ -28,10 +33,12 @@ fetch('admin/password.json')
 // SHA-256 hashing function
 async function sha256(str) {
     const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, '0')).join('');
+    return Array.from(new Uint8Array(buf))
+        .map(x => x.toString(16).padStart(2, '0'))
+        .join('');
 }
 
-// Check password
+// Check password (universal)
 async function checkPassword(inputId, gateId, contentId, errorId) {
     if (!PASSWORD_HASH) return;
 
@@ -48,7 +55,7 @@ async function checkPassword(inputId, gateId, contentId, errorId) {
     }
 }
 
-// Logout
+// Logout (universal)
 function logout(gateId, contentId, inputId, errorId) {
     sessionStorage.removeItem('adminAccess');
     document.getElementById(gateId).style.display = 'block';
@@ -57,14 +64,21 @@ function logout(gateId, contentId, inputId, errorId) {
     document.getElementById(errorId).style.display = 'none';
 }
 
-// Auto-check session
+// Auto-check session and apply text
 window.addEventListener('load', function() {
-    // Apply configurable text
-    document.querySelector('#passwordGate h1').textContent = PASSWORD_PAGE_TEXT.title;
-    document.querySelector('#passwordGate p').textContent = PASSWORD_PAGE_TEXT.prompt;
-    document.querySelector('#unlockBtn').textContent = PASSWORD_PAGE_TEXT.unlockButton;
-    document.querySelector('.logout-btn').textContent = PASSWORD_PAGE_TEXT.logoutButton;
-    document.querySelector('#errorMessage').textContent = PASSWORD_PAGE_TEXT.errorMessage;
+    // Apply configurable text if elements exist
+    const gate = document.querySelector('#passwordGate');
+    if (gate) {
+        gate.querySelector('h1').textContent = PASSWORD_PAGE_TEXT.title;
+        gate.querySelector('p').textContent = PASSWORD_PAGE_TEXT.prompt;
+        const unlockBtn = gate.querySelector('.unlock-btn');
+        if (unlockBtn) unlockBtn.textContent = PASSWORD_PAGE_TEXT.unlockButton;
+        const errorDiv = gate.querySelector('#errorMessage');
+        if (errorDiv) errorDiv.textContent = PASSWORD_PAGE_TEXT.errorMessage;
+    }
+
+    const logoutBtn = document.querySelector('.logout-btn');
+    if (logoutBtn) logoutBtn.textContent = PASSWORD_PAGE_TEXT.logoutButton;
 
     if (sessionStorage.getItem('adminAccess') === 'true') {
         document.querySelectorAll('.password-gate').forEach(gate => gate.style.display = 'none');
