@@ -1,45 +1,49 @@
-/* --- Fixed Header Container --- */
+/* --- Fixed Header --- */
 .site-header {
-    position: fixed;           /* keeps header at top */
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;               /* full page width */
-    background: #667eea;       /* header color */
+    width: 100%;
+    background: #667eea;
     color: white;
-    padding: 15px 20px;
-    text-align: center;
+    padding: 10px 20px;
     box-sizing: border-box;
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    z-index: 1000;             /* ensures header stays above content */
+    z-index: 1000;
+    display: flex;                 /* flex for logo + nav */
+    align-items: center;
 }
 
-/* --- Header Title --- */
-.site-header h1 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 28px;
-    margin: 0 0 5px 0;
+/* --- Logo --- */
+.header-logo {
+    height: 40px;                  /* adjust size */
+    width: auto;
+    margin-right: 20px;
+}
+
+.logo-link {
+    display: inline-block;
 }
 
 /* --- Navigation --- */
 .site-header nav {
-    display: inline-block;     
-    margin-top: 5px;
+    display: flex;
+    gap: 15px;                     /* space between links */
 }
 
 .site-header nav a {
     color: white;
-    margin: 0 12px;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s;
 }
 
 .site-header nav a:hover {
-    color: #ffcc00;           
+    color: #ffcc00;
     text-decoration: underline;
 }
 
 /* --- Push page content below header --- */
 body > :not(.site-header) {
-    margin-top: 80px;          /* adjust to header height */
+    margin-top: 60px;              /* adjust to header height */
 }
