@@ -1,6 +1,16 @@
+// --- Configurable Text ---
+const PASSWORD_PAGE_TEXT = {
+    title: "🔐 Password",
+    prompt: "Enter the password",
+    unlockButton: "Submit",
+    logoutButton: "Logout",
+    errorMessage: "Incorrect password. Please try again."
+};
+
+// --- Password Logic ---
 let PASSWORD_HASH = null;
 
-// Disable all unlock buttons until hash loads
+// Disable unlock button until password loads
 document.querySelectorAll('.unlock-btn').forEach(btn => btn.disabled = true);
 
 // Load password hash
@@ -47,8 +57,15 @@ function logout(gateId, contentId, inputId, errorId) {
     document.getElementById(errorId).style.display = 'none';
 }
 
-// Auto-check session on load
+// Auto-check session
 window.addEventListener('load', function() {
+    // Apply configurable text
+    document.querySelector('#passwordGate h1').textContent = PASSWORD_PAGE_TEXT.title;
+    document.querySelector('#passwordGate p').textContent = PASSWORD_PAGE_TEXT.prompt;
+    document.querySelector('#unlockBtn').textContent = PASSWORD_PAGE_TEXT.unlockButton;
+    document.querySelector('.logout-btn').textContent = PASSWORD_PAGE_TEXT.logoutButton;
+    document.querySelector('#errorMessage').textContent = PASSWORD_PAGE_TEXT.errorMessage;
+
     if (sessionStorage.getItem('adminAccess') === 'true') {
         document.querySelectorAll('.password-gate').forEach(gate => gate.style.display = 'none');
         document.querySelectorAll('.hidden-content').forEach(content => content.style.display = 'block');
