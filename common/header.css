@@ -4,19 +4,19 @@
     top: 0;
     left: 0;
     width: 100%;
-    background: #667eea;
+    background: #000000;        /* changed to black */
     color: white;
     padding: 10px 20px;
     box-sizing: border-box;
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     z-index: 1000;
-    display: flex;                 /* flex for logo + nav */
+    display: flex;
     align-items: center;
 }
 
 /* --- Logo --- */
 .header-logo {
-    height: 40px;                  /* adjust size */
+    height: 40px;
     width: auto;
     margin-right: 20px;
 }
@@ -28,7 +28,7 @@
 /* --- Navigation --- */
 .site-header nav {
     display: flex;
-    gap: 15px;                     /* space between links */
+    gap: 15px;
 }
 
 .site-header nav a {
