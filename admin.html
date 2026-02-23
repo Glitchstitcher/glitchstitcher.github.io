@@ -193,11 +193,11 @@
         let PASSWORD_HASH = null;
         
         // Load password hash from admin folder
-        fetch('portfolio-password.json')
-            .then(response => response.json())
-            .then(data => {
-                PASSWORD_HASH = data.portfolioPassword;
-            })
+fetch('admin/password.json')
+    .then(response => response.json())
+    .then(data => {
+        PASSWORD_HASH = data.password; // adjust key if needed
+    })
             .catch(error => {
                 console.error('Failed to load password configuration:', error);
                 alert('Error loading password configuration. Please try again later.');
