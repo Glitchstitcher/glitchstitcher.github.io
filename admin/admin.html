@@ -1,50 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Protected</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- Optional: protect this page too -->
-  <script src="/admin/auth.js"></script>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 60px auto;
-      text-align: center;
-    }
+        .password-gate {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
 
-    button, a {
-      display: inline-block;
-      padding: 10px 18px;
-      font-size: 16px;
-      border-radius: 6px;
-      text-decoration: none;
-      margin: 10px 5px;
-      background: #eee;
-      color: #000;
-      cursor: pointer;
-    }
+        .password-gate h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
 
-    button:hover, a:hover {
-      background: #ccc;
-    }
-  </style>
+        .password-gate p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .password-gate input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .password-gate input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .password-gate button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-gate button:hover {
+            background: #764ba2;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 15px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .hidden-content {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .admin-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .admin-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+        .admin-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+
+        .admin-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
-
 <body>
-  <h1>Admin Panel</h1>
-  <p>Reset site authentication cookie.</p>
+    <div id="passwordGate" class="password-gate">
+        <h1>🔐 Admin Panel</h1>
+        <p>Enter the password to access the admin panel</p>
+        <input 
+            type="password" 
+            id="passwordInput" 
+            placeholder="Enter password" 
+            onkeypress="if(event.key==='Enter') checkPassword()"
+        >
+        <button onclick="checkPassword()">Unlock</button>
+        <div id="errorMessage" class="error-message">Incorrect password. Please try again.</div>
+    </div>
 
-  <button onclick="resetAuth()">Reset Site Login</button>
-  <a href="/index.html">Back to Home</a>
+    <div id="adminContent" class="hidden-content">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h1>⚙️ Admin Panel</h1>
+                <p>Welcome to the admin panel</p>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
 
-  <script>
-    function resetAuth() {
-      document.cookie = "site_auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      alert("Login reset. You will need to enter the password again.");
-    }
-  </script>
+            <div class="admin-section">
+                <h2>Password Management</h2>
+                <p>Current password hash is stored in: <code>admin/portfolio-password.json</code></p>
+                <p style="margin-top: 10px;">To change the password:</p>
+                <ol style="text-align: left; margin-top: 10px;">
+                    <li>Go to <a href="https://sha256.org/" target="_blank">sha256.org</a></li>
+                    <li>Enter your new password</li>
+                    <li>Copy the generated hash</li>
+                    <li>Update <code>admin/portfolio-password.json</code></li>
+                    <li>Commit and push the changes</li>
+                </ol>
+            </div>
+
+            <div class="admin-section">
+                <h2>Protected Areas</h2>
+                <ul style="text-align: left;">
+                    <li><a href="../portfolio/" target="_blank">Portfolio</a> - Protected by password</li>
+                    <li><a href="admin.html" target="_blank">Admin Panel</a> - Protected by password</li>
+                </ul>
+            </div>
+
+            <div class="admin-section">
+                <h2>Configuration Files</h2>
+                <ul style="text-align: left;">
+                    <li><code>admin/portfolio-password.json</code> - Password configuration</li>
+                    <li><code>admin/auth.js</code> - Authentication scripts</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let PASSWORD_HASH = null;
+        
+        // Load password hash from admin folder
+        fetch('portfolio-password.json')
+            .then(response => response.json())
+            .then(data => {
+                PASSWORD_HASH = data.portfolioPassword;
+            })
+            .catch(error => {
+                console.error('Failed to load password configuration:', error);
+                alert('Error loading password configuration. Please try again later.');
+            });
+        
+        // SHA-256 hashing function
+        async function sha256(str) {
+            const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+            return Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function checkPassword() {
+            if (!PASSWORD_HASH) {
+                alert('Password configuration is still loading. Please try again in a moment.');
+                return;
+            }
+            
+            const password = document.getElementById('passwordInput').value;
+            const hash = await sha256(password);
+            
+            if (hash === PASSWORD_HASH) {
+                // Correct password
+                document.getElementById('passwordGate').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                
+                // Store session (browser session only)
+                sessionStorage.setItem('adminAccess', 'true');
+            } else {
+                // Incorrect password
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('adminAccess');
+            document.getElementById('passwordGate').style.display = 'block';
+            document.getElementById('adminContent').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        // Check if user already has access in this session
+        window.addEventListener('load', function() {
+            if (sessionStorage.getItem('adminAccess') === 'true') {
+                document.getElementById('passwordGate').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+            }
+        });
+    </script>
 </body>
 </html>
