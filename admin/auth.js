@@ -15,19 +15,22 @@ document.querySelectorAll('.unlock-btn').forEach(btn => btn.disabled = true);
 
 // Determine correct path to password.json
 let passwordPath = window.location.pathname.includes('/portfolio/')
-    ? '../admin/password.json'   // portfolio folder
-    : 'password.json';           // admin folder
+    ? '../admin/password.json'  // portfolio folder
+    : 'admin/password.json';    // admin folder
 
 // Load password hash
 fetch(passwordPath)
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+    })
     .then(data => {
         PASSWORD_HASH = data.password;
         document.querySelectorAll('.unlock-btn').forEach(btn => btn.disabled = false);
     })
     .catch(error => {
         console.error('Failed to load password configuration:', error);
-        alert('Error loading password configuration. Please try again later.');
+        // No alert, so the page won’t show an error immediately
     });
 
 // SHA-256 hashing function
@@ -66,7 +69,6 @@ function logout(gateId, contentId, inputId, errorId) {
 
 // Auto-check session and apply text
 window.addEventListener('load', function() {
-    // Apply configurable text if elements exist
     const gate = document.querySelector('#passwordGate');
     if (gate) {
         gate.querySelector('h1').textContent = PASSWORD_PAGE_TEXT.title;
