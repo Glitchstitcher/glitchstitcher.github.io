@@ -110,10 +110,18 @@
     </div>
 
     <script>
-        // Password hash (SHA-256 hash of your password)
-        // Default password: "portfolio123" 
-        // You can create your own hash at: https://sha256.org/
-        const PASSWORD_HASH = "a665e97f08da3a6e5a85e99fa5cee0ed863873ac6abaf2f6a9e51ad2c69e03c3";
+        let PASSWORD_HASH = null;
+        
+        // Load password hash from admin folder
+        fetch('../admin/portfolio-password.json')
+            .then(response => response.json())
+            .then(data => {
+                PASSWORD_HASH = data.portfolioPassword;
+            })
+            .catch(error => {
+                console.error('Failed to load password configuration:', error);
+                alert('Error loading password configuration. Please try again later.');
+            });
         
         // SHA-256 hashing function
         async function sha256(str) {
@@ -122,6 +130,11 @@
         }
 
         async function checkPassword() {
+            if (!PASSWORD_HASH) {
+                alert('Password configuration is still loading. Please try again in a moment.');
+                return;
+            }
+            
             const password = document.getElementById('passwordInput').value;
             const hash = await sha256(password);
             
