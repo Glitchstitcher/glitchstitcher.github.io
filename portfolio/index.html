@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Protected</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .password-gate {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .password-gate h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .password-gate p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .password-gate input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .password-gate input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .password-gate button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-gate button:hover {
+            background: #764ba2;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 15px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .hidden-content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="passwordGate" class="password-gate">
+        <h1>🔐 Portfolio</h1>
+        <p>Enter the password to view the portfolio</p>
+        <input 
+            type="password" 
+            id="passwordInput" 
+            placeholder="Enter password" 
+            onkeypress="if(event.key==='Enter') checkPassword()"
+        >
+        <button onclick="checkPassword()">Unlock</button>
+        <div id="errorMessage" class="error-message">Incorrect password. Please try again.</div>
+    </div>
+
+    <div id="portfolioContent" class="hidden-content">
+        <!-- Portfolio content will load here -->
+        <iframe 
+            id="contentFrame" 
+            style="width: 100%; height: 100vh; border: none;" 
+            src="portfolio.html">
+        </iframe>
+    </div>
+
+    <script>
+        // Password hash (SHA-256 hash of your password)
+        // Default password: "portfolio123" 
+        // You can create your own hash at: https://sha256.org/
+        const PASSWORD_HASH = "a665e97f08da3a6e5a85e99fa5cee0ed863873ac6abaf2f6a9e51ad2c69e03c3";
+        
+        // SHA-256 hashing function
+        async function sha256(str) {
+            const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+            return Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const hash = await sha256(password);
+            
+            if (hash === PASSWORD_HASH) {
+                // Correct password
+                document.getElementById('passwordGate').style.display = 'none';
+                document.getElementById('portfolioContent').style.display = 'block';
+                
+                // Store session (browser session only)
+                sessionStorage.setItem('portfolioAccess', 'true');
+            } else {
+                // Incorrect password
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        // Check if user already has access in this session
+        window.addEventListener('load', function() {
+            if (sessionStorage.getItem('portfolioAccess') === 'true') {
+                document.getElementById('passwordGate').style.display = 'none';
+                document.getElementById('portfolioContent').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
