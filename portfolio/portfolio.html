@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
     <link rel="stylesheet" href="/admin/admin.css">
-    <script src="/admin/auth.js"></script>
+    <script src="/admin/auth.js" defer></script>
 </head>
 <body>
     <!-- Password Gate -->
@@ -43,9 +43,6 @@
         </div>
     </div>
 
-    <!-- Combined Auth + Config JS -->
-    <script src="admin/auth.js"></script>
-
     <script>
         // --- Portfolio Search Logic ---
         const fcstdFiles = [
@@ -59,7 +56,7 @@
             "Domestic/Kitchen/Kitchen Master Collection.fcstd",
             "Domestic/Organization/Storage/Storage Bench.fcstd",
             "Domestic/Vehicles/Motorcycle Master Collection.fcstd"
-            // ... keep full list as before
+            // ... add more files as needed
         ];
 
         const searchBox = document.getElementById('searchBox');
@@ -101,5 +98,3 @@
     </script>
 </body>
 </html>
-
-
