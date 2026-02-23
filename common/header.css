@@ -1,0 +1,14 @@
+.site-header {
+    background: #667eea;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+}
+.site-header nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+.site-header nav a:hover {
+    text-decoration: underline;
+}
