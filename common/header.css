@@ -1,15 +1,16 @@
-/* --- Header Container --- */
+/* --- Fixed Header Container --- */
 .site-header {
+    position: fixed;           /* keeps header at top */
+    top: 0;
+    left: 0;
     width: 100%;               /* full page width */
     background: #667eea;       /* header color */
     color: white;
-    padding: 15px 20px;        /* spacing inside header */
+    padding: 15px 20px;
     text-align: center;
-    box-sizing: border-box;    /* include padding in width */
-    position: relative;        /* stays at top of page flow */
-    top: 0;
-    left: 0;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* subtle shadow */
+    box-sizing: border-box;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    z-index: 1000;             /* ensures header stays above content */
 }
 
 /* --- Header Title --- */
@@ -21,7 +22,7 @@
 
 /* --- Navigation --- */
 .site-header nav {
-    display: inline-block;     /* center links under title */
+    display: inline-block;     
     margin-top: 5px;
 }
 
@@ -34,6 +35,11 @@
 }
 
 .site-header nav a:hover {
-    color: #ffcc00;           /* hover color */
+    color: #ffcc00;           
     text-decoration: underline;
+}
+
+/* --- Push page content below header --- */
+body > :not(.site-header) {
+    margin-top: 80px;          /* adjust to header height */
 }
