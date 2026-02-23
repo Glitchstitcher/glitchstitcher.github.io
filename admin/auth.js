@@ -7,83 +7,112 @@ const PASSWORD_PAGE_TEXT = {
     errorMessage: "Incorrect password. Please try again."
 };
 
-// --- Password Logic ---
+// --- Settings ---
+const ACCESS_DURATION_DAYS = 60;
+const ACCESS_KEY = "adminAccessExpires";
 let PASSWORD_HASH = null;
 
-// Disable unlock buttons until password loads
-document.querySelectorAll('.unlock-btn').forEach(btn => btn.disabled = true);
+// --- Load Password Hash ---
+async function loadPassword() {
+    try {
+        const response = await fetch('/admin/password.json');
+        if (!response.ok) throw new Error('Failed to load password.json');
 
-// Determine correct path to password.json
-let passwordPath = window.location.pathname.includes('/portfolio/')
-    ? '../admin/password.json'  // portfolio folder
-    : 'admin/password.json';    // admin folder
-
-// Load password hash
-fetch(passwordPath)
-    .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-    })
-    .then(data => {
+        const data = await response.json();
         PASSWORD_HASH = data.password;
-        document.querySelectorAll('.unlock-btn').forEach(btn => btn.disabled = false);
-    })
-    .catch(error => {
-        console.error('Failed to load password configuration:', error);
-        // No alert, so the page won’t show an error immediately
-    });
 
-// SHA-256 hashing function
+        document.querySelectorAll('.unlock-btn')
+            .forEach(btn => btn.disabled = false);
+
+    } catch (error) {
+        console.error("Password load error:", error);
+    }
+}
+
+// Disable buttons until password loads
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.unlock-btn')
+        .forEach(btn => btn.disabled = true);
+    loadPassword();
+});
+
+// --- SHA-256 Hash Function ---
 async function sha256(str) {
-    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf))
+    const buffer = await crypto.subtle.digest(
+        "SHA-256",
+        new TextEncoder().encode(str)
+    );
+
+    return Array.from(new Uint8Array(buffer))
         .map(x => x.toString(16).padStart(2, '0'))
         .join('');
 }
 
-// Check password (universal)
+// --- Check Password ---
 async function checkPassword(inputId, gateId, contentId, errorId) {
     if (!PASSWORD_HASH) return;
 
-    const password = document.getElementById(inputId).value;
+    const input = document.getElementById(inputId);
+    const errorDiv = document.getElementById(errorId);
+    const password = input.value;
+
     const hash = await sha256(password);
 
     if (hash === PASSWORD_HASH) {
+        const expires =
+            Date.now() + (ACCESS_DURATION_DAYS * 24 * 60 * 60 * 1000);
+
+        localStorage.setItem(ACCESS_KEY, expires);
+
         document.getElementById(gateId).style.display = 'none';
         document.getElementById(contentId).style.display = 'block';
-        sessionStorage.setItem('adminAccess', 'true');
     } else {
-        document.getElementById(errorId).style.display = 'block';
-        document.getElementById(inputId).value = '';
+        errorDiv.style.display = 'block';
+        input.value = '';
     }
 }
 
-// Logout (universal)
+// --- Logout ---
 function logout(gateId, contentId, inputId, errorId) {
-    sessionStorage.removeItem('adminAccess');
+    localStorage.removeItem(ACCESS_KEY);
+
     document.getElementById(gateId).style.display = 'block';
     document.getElementById(contentId).style.display = 'none';
     document.getElementById(inputId).value = '';
     document.getElementById(errorId).style.display = 'none';
 }
 
-// Auto-check session and apply text
-window.addEventListener('load', function() {
-    const gate = document.querySelector('#passwordGate');
+// --- Apply UI + Expiration Check ---
+window.addEventListener('load', () => {
+
+    const gate = document.getElementById('passwordGate');
+
     if (gate) {
         gate.querySelector('h1').textContent = PASSWORD_PAGE_TEXT.title;
         gate.querySelector('p').textContent = PASSWORD_PAGE_TEXT.prompt;
+
         const unlockBtn = gate.querySelector('.unlock-btn');
-        if (unlockBtn) unlockBtn.textContent = PASSWORD_PAGE_TEXT.unlockButton;
+        if (unlockBtn)
+            unlockBtn.textContent = PASSWORD_PAGE_TEXT.unlockButton;
+
         const errorDiv = gate.querySelector('#errorMessage');
-        if (errorDiv) errorDiv.textContent = PASSWORD_PAGE_TEXT.errorMessage;
+        if (errorDiv)
+            errorDiv.textContent = PASSWORD_PAGE_TEXT.errorMessage;
     }
 
     const logoutBtn = document.querySelector('.logout-btn');
-    if (logoutBtn) logoutBtn.textContent = PASSWORD_PAGE_TEXT.logoutButton;
+    if (logoutBtn)
+        logoutBtn.textContent = PASSWORD_PAGE_TEXT.logoutButton;
 
-    if (sessionStorage.getItem('adminAccess') === 'true') {
-        document.querySelectorAll('.password-gate').forEach(gate => gate.style.display = 'none');
-        document.querySelectorAll('.hidden-content').forEach(content => content.style.display = 'block');
+    const expires = localStorage.getItem(ACCESS_KEY);
+
+    if (expires && Date.now() < parseInt(expires)) {
+        document.querySelectorAll('.password-gate')
+            .forEach(g => g.style.display = 'none');
+
+        document.querySelectorAll('.hidden-content')
+            .forEach(c => c.style.display = 'block');
+    } else {
+        localStorage.removeItem(ACCESS_KEY);
     }
 });
