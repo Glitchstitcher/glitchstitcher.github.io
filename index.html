@@ -23,12 +23,12 @@
 
     .categories {
       display: flex;
-      justify-content: space-around; /* categories side by side */
+      justify-content: space-around;
       margin-top: 15px;
       gap: 20px;
-      flex-wrap: wrap; /* wrap on narrow screens */
+      flex-wrap: wrap;
     }
-    
+
     @media (max-width: 520px) {
       .categories { gap: 12px; }
       .category a { padding: 8px 10px; }
@@ -36,7 +36,7 @@
 
     .category {
       display: flex;
-      flex-direction: column; /* links stacked vertically */
+      flex-direction: column;
       align-items: center;
     }
 
@@ -59,6 +59,12 @@
     h2 {
       margin-bottom: 6px;
     }
+
+    .version {
+      font-size: 12px;
+      color: #666;
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
@@ -70,16 +76,14 @@
     <div class="category">
       <h2>Socials</h2>
       <a href="https://www.instagram.com/glitchstitcher/" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
-      <!-- add rel for security -->
       <a href="https://rumble.com/user/Glitchstitcher" target="_blank" rel="noopener noreferrer">
         <img src="https://github.com/Glitchstitcher/glitchstitcher.github.io/blob/main/images/icons/rumble%20icon.png?raw=true" alt="Rumble" style="width:16px; height:16px; margin-right:8px;">Rumble
-        </a>
+      </a>
       <a href="https://www.youtube.com/@glitchstitcher" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i>Youtube</a>
       <a href="#" onclick="copyEmail(); return false;" aria-label="Copy email to clipboard">
         <i class="fas fa-envelope"></i> Email
-        </a>
-        <span id="copy-msg" style="display:none; margin-left:6px; color:green;" aria-live="polite">Copied!</span>
-<!-- move script to end of body -->
+      </a>
+      <span id="copy-msg" style="display:none; margin-left:6px; color:green;" aria-live="polite">Copied!</span>
     </div>
 
     <div class="category">
@@ -87,7 +91,7 @@
       <a href="https://ko-fi.com/glitchstitcher" target="_blank"><i class="fas fa-coffee"></i>Ko-Fi</a>
       <a href="https://www.patreon.com/cw/Glitchstitcher" target="_blank">
         <img src="https://github.com/Glitchstitcher/glitchstitcher.github.io/blob/main/images/icons/patreon%20icon.png?raw=true" alt="Patreon" style="width:16px; height:16px; margin-right:8px;">Patreon
-        </a>
+      </a>
     </div>
 
     <div class="category">
@@ -95,27 +99,31 @@
       <a href="https://github.com/glitchstitcher" target="_blank"><i class="fab fa-github"></i>GitHub</a>
     </div>
   </div>
-<div style="margin-top:40px;">
-  <a href="portfolio/" style="
-    display:inline-block;
-    padding:10px 18px;
-    border-radius:6px;
-    background:#eee;
-    text-decoration:none;
-    color:#333;
-    margin-right: 10px;
-  ">
-    <i class="fas fa-folder"></i> Portfolio
-  </a>
-</div>
+
+  <div style="margin-top:40px;">
+    <a href="portfolio/" style="
+      display:inline-block;
+      padding:10px 18px;
+      border-radius:6px;
+      background:#eee;
+      text-decoration:none;
+      color:#333;
+      margin-right: 10px;
+    ">
+      <i class="fas fa-folder"></i> Portfolio
+    </a>
+  </div>
+
+  <div class="version">v1.0.0</div>
+
+  <script>
+    function copyEmail() {
+      navigator.clipboard.writeText('glitchstitcher@gmail.com').then(() => {
+        const msg = document.getElementById('copy-msg');
+        msg.style.display = 'inline';
+        setTimeout(() => { msg.style.display = 'none'; }, 1500);
+      });
+    }
+  </script>
 </body>
-<script>
-function copyEmail() {
-  navigator.clipboard.writeText('glitchstitcher@gmail.com').then(() => {
-    const msg = document.getElementById('copy-msg');
-    msg.style.display = 'inline';
-    setTimeout(() => { msg.style.display = 'none'; }, 1500);
-  });
-}
-</script>
 </html>
