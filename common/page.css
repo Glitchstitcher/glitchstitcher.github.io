@@ -37,80 +37,10 @@ body {
     );
 }
 
-/* --- Password Gate --- */
-.password-gate {
-    background: var(--panel-bg);
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-}
-
-.password-gate h1 {
-    color: var(--text-main);
-    margin-bottom: 10px;
-    font-size: 28px;
-}
-
-.password-gate p {
-    color: var(--text-muted);
-    margin-bottom: 30px;
-    font-size: 14px;
-}
-
-.password-gate input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s;
-}
-
-.password-gate input:focus {
-    outline: none;
-    border-color: var(--primary);
-}
-
-.password-gate button {
-    width: 100%;
-    padding: 12px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.password-gate button:hover {
-    background: var(--primary-hover);
-}
-
-.error-message {
-    color: var(--danger);
-    margin-top: 15px;
-    display: none;
-    font-size: 14px;
-}
-
-/* --- Hidden Content --- */
-.hidden-content {
-    display: none;
-    width: 100%;
-    height: 100%;
-}
-
 /* --- Page Container --- */
 .page-container {
-    width: 100%;
-    max-width: none; /* container stretches full width */
-    margin: 0;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
     background: var(--panel-bg);
     min-height: 100vh;
