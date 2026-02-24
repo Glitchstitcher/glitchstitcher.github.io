@@ -2,13 +2,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const placeholder = document.getElementById('header-placeholder');
     if (!placeholder) return;
 
-    // Load the header HTML
-    fetch('/common/header.html')
+    // Adjust path if portfolio.html is in /portfolio/
+    fetch('../common/header.html')
         .then(resp => resp.text())
         .then(html => {
+            // Add header HTML
             placeholder.innerHTML = html;
 
-            // Header now exists
+            // Now header exists
             const header = document.querySelector('.site-header');
             if (!header) return;
 
@@ -28,13 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
             header.appendChild(searchBox);
             header.appendChild(resultsPopup);
 
-            // Load JSON and attach search logic
+            // Load files for search
             let fcstdFiles = [];
             fetch('../portfolio/searchfiles.json')
                 .then(r => r.json())
                 .then(data => fcstdFiles = data)
                 .catch(console.error);
 
+            // Search logic
             function displayResults(query) {
                 resultsPopup.innerHTML = '';
                 if (!query.trim() || fcstdFiles.length === 0) {
