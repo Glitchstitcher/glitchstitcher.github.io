@@ -1,24 +1,17 @@
+// --- header.js: Load shared header ---
 document.addEventListener("DOMContentLoaded", () => {
-    // Ensure charset exists
-    if (!document.querySelector('meta[charset]')) {
-        const meta = document.createElement('meta');
-        meta.setAttribute('charset', 'UTF-8');
-        document.head.prepend(meta);
-    }
+    const placeholder = document.getElementById('header-placeholder');
+    if (!placeholder) return;
 
-    // Ensure viewport exists
-    if (!document.querySelector('meta[name="viewport"]')) {
-        const viewport = document.createElement('meta');
-        viewport.name = "viewport";
-        viewport.content = "width=device-width, initial-scale=1.0";
-        document.head.appendChild(viewport);
-    }
-
-    // Set title format
-    const baseTitle = "My Site";
-    if (document.title) {
-        document.title = document.title + " | " + baseTitle;
-    } else {
-        document.title = baseTitle;
-    }
+    fetch('/common/header.html')
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.text();
+        })
+        .then(html => {
+            placeholder.innerHTML = html;
+        })
+        .catch(err => {
+            console.error('Failed to load header:', err);
+        });
 });
