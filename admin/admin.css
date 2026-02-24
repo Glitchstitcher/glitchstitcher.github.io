@@ -1,41 +1,5 @@
-/* --- Theme Colors --- */
-:root {
-    --bg-gradient-start: #111111;
-    --bg-gradient-end: #444444;
-
-    --primary: #4a90e2;
-    --primary-hover: #357abd;
-
-    --danger: #e74c3c;
-    --danger-hover: #c0392b;
-
-    --text-main: #333333;
-    --text-muted: #666666;
-
-    --panel-bg: #ffffff;
-    --section-bg: #f2f2f2;
-}
-
-/* --- General Reset --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* --- Body --- */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(
-        135deg,
-        var(--bg-gradient-start) 0%,
-        var(--bg-gradient-end) 100%
-    );
-}
+/* --- Import base page styles --- */
+@import url("page.css");
 
 /* --- Password Gate --- */
 .password-gate {
@@ -106,7 +70,7 @@ body {
     height: 100%;
 }
 
-/* --- Admin Content --- */
+/* --- Admin / Protected Content --- */
 .admin-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -127,23 +91,6 @@ body {
     margin-bottom: 10px;
 }
 
-.logout-btn {
-    display: inline-block;
-    padding: 8px 16px;
-    background: var(--danger);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-top: 15px;
-}
-
-.logout-btn:hover {
-    background: var(--danger-hover);
-}
-
-/* --- Admin Sections --- */
 .admin-section {
     margin-bottom: 30px;
     padding: 20px;
