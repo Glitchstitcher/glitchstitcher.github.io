@@ -1,7 +1,7 @@
 // --- Configurable Text ---
 const PASSWORD_PAGE_TEXT = {
     title: "🔐 Password",
-    prompt: "",
+    prompt: "1",
     unlockButton: "Submit",
     logoutButton: "Logout",
     errorMessage: "Incorrect password. Please try again."
