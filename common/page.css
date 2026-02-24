@@ -29,36 +29,45 @@ body {
     min-height: 100vh;
 
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;       /* align container to top */
+    justify-content: center;       /* center horizontally */
 
     background: linear-gradient(
         135deg,
         var(--bg-gradient-start) 0%,
         var(--bg-gradient-end) 100%
     );
+    padding: 40px 0;              /* fixed top/bottom margin outside container */
 }
 
 /* --- Page Container --- */
 .page-container {
-    max-width: 1600px;
-    margin: 0 auto;
+    width: 100%;                   /* fill available width */
+    max-width: 1200px;             /* maximum width */
+    margin: 0 20px;                /* fixed side margins */
     padding: 20px;
     background: var(--panel-bg);
-    min-height: 100vh;
+    border-radius: 8px;
+    min-height: calc(100vh - 80px); /* viewport minus vertical padding */
+    transition: all 0.2s ease;     /* smooth resizing */
+    box-sizing: border-box;
 }
 
 /* --- Page Header --- */
 .page-header {
     text-align: center;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
     border-bottom: 2px solid var(--primary);
 }
 
 .page-header h1 {
     color: var(--text-main);
     margin-bottom: 10px;
+}
+
+.page-header p {
+    color: var(--text-muted);
 }
 
 /* --- Page Sections --- */
@@ -72,4 +81,23 @@ body {
 .page-section h2 {
     color: var(--primary);
     margin-bottom: 15px;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .page-container {
+        padding: 15px;
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-container {
+        padding: 10px;
+        margin: 0 5px;
+    }
+
+    .page-section {
+        padding: 15px;
+    }
 }
