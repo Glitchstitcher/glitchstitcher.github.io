@@ -1,79 +1,68 @@
-// protectedheader.js
-// Adds a search box to the existing header without replacing it
+document.addEventListener("DOMContentLoaded", () => {
+    const placeholder = document.getElementById('header-placeholder');
+    if (!placeholder) return;
 
-// Find your existing header (assumes it has id="site-header" or change selector)
-const header = document.getElementById('site-header');
+    // Load the header HTML
+    fetch('/common/header.html')
+        .then(resp => resp.text())
+        .then(html => {
+            placeholder.innerHTML = html;
 
-if (header) {
-    // Create search input
-    const searchBox = document.createElement('input');
-    searchBox.type = 'text';
-    searchBox.id = 'searchBox';
-    searchBox.placeholder = 'Search .fcstd files...';
-    searchBox.autocomplete = 'off';
-    searchBox.style.marginLeft = '10px'; // adjust as needed
+            // Header now exists
+            const header = document.querySelector('.site-header');
+            if (!header) return;
 
-    // Create results popup
-    const resultsPopup = document.createElement('div');
-    resultsPopup.id = 'searchResultsPopup';
-    resultsPopup.className = 'search-results-popup';
-    resultsPopup.style.display = 'none';
-    resultsPopup.style.position = 'absolute';
-    resultsPopup.style.top = '100%';
-    resultsPopup.style.left = '0';
-    resultsPopup.style.right = '0';
-    resultsPopup.style.maxHeight = '400px';
-    resultsPopup.style.overflowY = 'auto';
-    resultsPopup.style.zIndex = '1000';
-    resultsPopup.style.background = '#fff';
-    resultsPopup.style.border = '1px solid #ccc';
+            // Add search box
+            const searchBox = document.createElement('input');
+            searchBox.type = 'text';
+            searchBox.id = 'searchBox';
+            searchBox.placeholder = 'Search .fcstd files...';
+            searchBox.autocomplete = 'off';
+            searchBox.style.marginLeft = '10px';
 
-    // Append search elements to header
-    header.appendChild(searchBox);
-    header.appendChild(resultsPopup);
-
-    // Search logic
-    let fcstdFiles = [];
-    fetch('../portfolio/searchfiles.json')  // adjust path if needed
-        .then(resp => resp.json())
-        .then(data => { fcstdFiles = data; })
-        .catch(err => console.error('Failed to load searchfiles.json:', err));
-
-    function displayResults(query) {
-        resultsPopup.innerHTML = '';
-        if (!query.trim() || fcstdFiles.length === 0) {
+            const resultsPopup = document.createElement('div');
+            resultsPopup.id = 'searchResultsPopup';
+            resultsPopup.className = 'search-results-popup';
             resultsPopup.style.display = 'none';
-            return;
-        }
 
-        const filtered = fcstdFiles.filter(file => file.toLowerCase().includes(query.toLowerCase()));
-        if (filtered.length === 0) {
-            resultsPopup.innerHTML = '<div class="no-results">No files found.</div>';
-        } else {
-            filtered.forEach(file => {
-                const fileName = file.split('/').pop();
-                const div = document.createElement('div');
-                div.className = 'result-item';
-                div.innerHTML = `
-                    <a href="../portfolio/${file}" download title="Download ${fileName}">${fileName}</a>
-                    <div class="result-path">📁 ${file.substring(0, file.lastIndexOf('/') + 1)}</div>
-                `;
-                resultsPopup.appendChild(div);
+            header.appendChild(searchBox);
+            header.appendChild(resultsPopup);
+
+            // Load JSON and attach search logic
+            let fcstdFiles = [];
+            fetch('../portfolio/searchfiles.json')
+                .then(r => r.json())
+                .then(data => fcstdFiles = data)
+                .catch(console.error);
+
+            function displayResults(query) {
+                resultsPopup.innerHTML = '';
+                if (!query.trim() || fcstdFiles.length === 0) {
+                    resultsPopup.style.display = 'none';
+                    return;
+                }
+                const filtered = fcstdFiles.filter(f => f.toLowerCase().includes(query.toLowerCase()));
+                if (filtered.length === 0) resultsPopup.innerHTML = '<div class="no-results">No files found.</div>';
+                else filtered.forEach(f => {
+                    const fileName = f.split('/').pop();
+                    const div = document.createElement('div');
+                    div.className = 'result-item';
+                    div.innerHTML = `
+                        <a href="../portfolio/${f}" download>${fileName}</a>
+                        <div class="result-path">📁 ${f.substring(0,f.lastIndexOf('/')+1)}</div>
+                    `;
+                    resultsPopup.appendChild(div);
+                });
+                resultsPopup.style.display = 'block';
+            }
+
+            searchBox.addEventListener('input', e => displayResults(e.target.value));
+            searchBox.addEventListener('focus', () => {
+                if (searchBox.value.trim()) displayResults(searchBox.value);
             });
-        }
-        resultsPopup.style.display = 'block';
-    }
-
-    // Event listeners
-    searchBox.addEventListener('input', e => displayResults(e.target.value));
-    searchBox.addEventListener('focus', e => {
-        if (searchBox.value.trim()) displayResults(searchBox.value);
-    });
-
-    // Hide popup when clicking outside
-    document.addEventListener('click', e => {
-        if (!header.contains(e.target)) {
-            resultsPopup.style.display = 'none';
-        }
-    });
-}
+            document.addEventListener('click', e => {
+                if (!header.contains(e.target)) resultsPopup.style.display = 'none';
+            });
+        })
+        .catch(err => console.error('Failed to load header:', err));
+});
