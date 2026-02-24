@@ -1,5 +1,5 @@
 /* --- Import base page styles --- */
-@import url("page.css");
+@import url("/common/page.css");
 
 /* --- Password Gate --- */
 .password-gate {
