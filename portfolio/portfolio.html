@@ -12,10 +12,32 @@
 
     <!-- Page Styles -->
     <link rel="stylesheet" href="/common/page.css">
+    <style>
+        /* Include your old search styles here */
+        .results-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .result-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            word-break: break-word;
+        }
+        .result-item a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .result-item a:hover { text-decoration: underline; }
+        .result-path { font-size: 12px; color: #999; margin-top: 5px; }
+        .no-results { color: #666; padding: 20px; text-align: center; }
+    </style>
 </head>
 <body>
 
-    <!-- Header Injection Point -->
     <div id="header-placeholder"></div>
 
     <!-- Password Gate -->
@@ -27,7 +49,7 @@
         <div id="errorMessage" style="display:none; color:red;"></div>
     </div>
 
-    <!-- Page Content (Hidden until password unlock) -->
+    <!-- Page Content (hidden until password unlock) -->
     <div id="portfolioContent" class="hidden-content" style="display:none;">
         <div class="page-container">
             <div class="page-header">
@@ -37,7 +59,12 @@
 
             <div class="page-section">
                 <h2>Search FreeCAD Files</h2>
-                <input type="text" id="searchBox" class="search-box" placeholder="Search for .fcstd files...">
+                <input 
+                    type="text" 
+                    id="searchBox" 
+                    class="search-box" 
+                    placeholder="Search for .fcstd files..."
+                >
                 <div class="results-count" id="resultsCount"></div>
                 <div id="resultsList" class="results-list"></div>
             </div>
@@ -49,9 +76,70 @@
                     <li><a href="manufacturing/wood-briquette-press.html">Wood Briquette Press</a></li>
                 </ul>
             </div>
-
         </div>
     </div>
+
+    <script>
+        // --- FreeCAD files ---
+        const fcstdFiles = [
+            "Freecad Templates Master Collection.fcstd",
+            "Sheet Template.fcstd",
+            "Uncategorized/Tattoo Stencil.fcstd",
+            "Uncategorized/Scans.fcstd",
+            "Uncategorized/Phone Holder.fcstd",
+            "Uncategorized/Mouse Trap.fcstd",
+            "Uncategorized/Metal Detector.fcstd",
+            "Production/V Rail Master Collection.fcstd",
+            "Production/Electronics Master Collection.fcstd",
+            "Production/Fixit Master Collection.fcstd",
+            "Production/Mechanical Components Master Collection.fcstd",
+            "Production/Tools/Tools Master Collection.fcstd",
+            "Production/Manufacturing/Wood Briquette Press.fcstd",
+            "Domestic/Kitchen/Kitchen Master Collection.fcstd",
+            "Domestic/Organization/Storage/Storage Bench.fcstd",
+            "Domestic/Vehicles/Motorcycle Master Collection.fcstd"
+        ];
+
+        const searchBox = document.getElementById('searchBox');
+        const resultsList = document.getElementById('resultsList');
+        const resultsCount = document.getElementById('resultsCount');
+
+        function displayResults(query) {
+            const filtered = fcstdFiles.filter(file => 
+                file.toLowerCase().includes(query.toLowerCase())
+            );
+
+            resultsList.innerHTML = '';
+
+            if (!query.trim()) {
+                resultsCount.innerHTML = '';
+                return;
+            }
+
+            if (filtered.length === 0) {
+                resultsList.innerHTML = '<div class="no-results">No files found matching your search.</div>';
+                resultsCount.innerHTML = '';
+                return;
+            }
+
+            resultsCount.innerHTML = `Found ${filtered.length} file${filtered.length !== 1 ? 's' : ''}`;
+
+            filtered.forEach(file => {
+                const fileName = file.split('/').pop();
+                const filePath = file.substring(0, file.lastIndexOf('/') + 1) || 'portfolio/';
+                
+                const div = document.createElement('div');
+                div.className = 'result-item';
+                div.innerHTML = `
+                    <a href="${file}" download title="Download ${fileName}">${fileName}</a>
+                    <div class="result-path">📁 ${filePath}</div>
+                `;
+                resultsList.appendChild(div);
+            });
+        }
+
+        searchBox.addEventListener('input', (e) => displayResults(e.target.value));
+    </script>
 
 </body>
 </html>
