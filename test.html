@@ -1,36 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Page</title>
 
-    <!-- Header CSS -->
+    <!-- Shared Head Defaults -->
+    <script src="/common/head.js" defer></script>
+
+    <!-- Shared Header Styles -->
     <link rel="stylesheet" href="/common/header.css">
 
-    <!-- Optional other CSS -->
+    <!-- Page Styles -->
     <link rel="stylesheet" href="/admin/admin.css">
+
+    <!-- Shared Header Loader -->
+    <script src="/common/header.js" defer></script>
 </head>
 <body>
 
-    <!-- Placeholder for the common header -->
+    <!-- Header Injection Point -->
     <div id="header-placeholder"></div>
 
-    <!-- Page content -->
+    <!-- Page Content -->
     <div class="admin-content">
         <h1>Test Page</h1>
-        <p>This page uses the common header loaded via JS. The logo on the top-left links to index.html.</p>
+        <p>This page uses shared head and header systems.</p>
     </div>
-
-    <!-- JS to load header.html -->
-    <script>
-        fetch('/common/header.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('header-placeholder').innerHTML = html;
-            })
-            .catch(err => console.error('Failed to load header:', err));
-    </script>
 
 </body>
 </html>
