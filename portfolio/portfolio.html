@@ -1,100 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="/admin/admin.css">
-    <script src="/admin/auth.js" defer></script>
-</head>
-<body>
-    <!-- Password Gate -->
-    <div id="passwordGate" class="password-gate">
-        <h1></h1>
-        <p></p>
-        <input type="password" id="passwordInput" placeholder="Enter password" 
-               onkeypress="if(event.key==='Enter') checkPassword('passwordInput','passwordGate','portfolioContent','errorMessage')">
-        <button id="unlockBtn" class="unlock-btn" 
-                onclick="checkPassword('passwordInput','passwordGate','portfolioContent','errorMessage')">Submit</button>
-        <div id="errorMessage" class="error-message"></div>
-    </div>
+<div id="portfolioContent" class="hidden-content">
+    <div class="page-container">
 
-    <!-- Protected Portfolio Content -->
-    <div id="portfolioContent" class="hidden-content">
-        <div class="admin-content">
+        <div class="page-header">
             <h1>Portfolio</h1>
             <p>Welcome to my portfolio.</p>
+        </div>
 
-            <div class="search-container">
-                <h2>Search FreeCAD Files</h2>
-                <input type="text" id="searchBox" class="search-box" placeholder="Search for .fcstd files...">
-            </div>
+        <div class="page-section">
+            <h2>Search FreeCAD Files</h2>
+            <input type="text" id="searchBox" class="search-box" placeholder="Search for .fcstd files...">
+            <div class="results-count" id="resultsCount"></div>
+            <div id="resultsList" class="results-list"></div>
+        </div>
 
-            <div class="results-container">
-                <div class="results-count" id="resultsCount"></div>
-                <div id="resultsList" class="results-list"></div>
-            </div>
-
+        <div class="page-section">
             <h2>Featured Projects</h2>
             <ul>
                 <li><a href="manufacturing/hot-wire-cutter.html">Hot Wire Cutter</a></li>
                 <li><a href="manufacturing/wood-briquette-press.html">Wood Briquette Press</a></li>
             </ul>
         </div>
+
     </div>
-
-    <script>
-        // --- Portfolio Search Logic ---
-        const fcstdFiles = [
-            "Freecad Templates Master Collection.fcstd",
-            "Sheet Template.fcstd",
-            "Uncategorized/Tattoo Stencil.fcstd",
-            "Uncategorized/Scans.fcstd",
-            "Uncategorized/Phone Holder.fcstd",
-            "Production/V Rail Master Collection.fcstd",
-            "Production/Tools/Air Master Collection.fcstd",
-            "Domestic/Kitchen/Kitchen Master Collection.fcstd",
-            "Domestic/Organization/Storage/Storage Bench.fcstd",
-            "Domestic/Vehicles/Motorcycle Master Collection.fcstd"
-            // ... add more files as needed
-        ];
-
-        const searchBox = document.getElementById('searchBox');
-        const resultsList = document.getElementById('resultsList');
-        const resultsCount = document.getElementById('resultsCount');
-
-        function displayResults(query) {
-            const filtered = fcstdFiles.filter(file => file.toLowerCase().includes(query.toLowerCase()));
-            resultsList.innerHTML = '';
-
-            if (!query.trim()) {
-                resultsCount.innerHTML = '';
-                return;
-            }
-
-            if (!filtered.length) {
-                resultsList.innerHTML = '<div class="no-results">No files found matching your search.</div>';
-                resultsCount.innerHTML = '';
-                return;
-            }
-
-            resultsCount.innerHTML = `Found ${filtered.length} file${filtered.length !== 1 ? 's' : ''}`;
-
-            filtered.forEach(file => {
-                const fileName = file.split('/').pop();
-                const filePath = file.substring(0, file.lastIndexOf('/') + 1) || 'portfolio/';
-
-                const div = document.createElement('div');
-                div.className = 'result-item';
-                div.innerHTML = `
-                    <a href="${file}" download title="Download ${fileName}">${fileName}</a>
-                    <div class="result-path">📁 ${filePath}</div>
-                `;
-                resultsList.appendChild(div);
-            });
-        }
-
-        searchBox.addEventListener('input', (e) => displayResults(e.target.value));
-    </script>
-</body>
-</html>
+</div>
