@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Protected Page</title>
     <link rel="stylesheet" href="admin/admin.css">
+</head>
 <body>
+
     <!-- Password Gate -->
     <div id="passwordGate" class="password-gate">
         <h1></h1>
@@ -25,7 +27,7 @@
                 <p>Welcome to the protected content</p>
                 <button class="logout-btn" 
                         onclick="logout('passwordGate','adminContent','passwordInput','errorMessage')">Logout</button>
-                <a href="index.html" class="home-btn">To Home</a></head>
+                <a href="index.html" class="home-btn">To Home</a>
             </div>
 
             <div class="admin-section">
@@ -50,6 +52,7 @@
             </div>
         </div>
     </div>
+
     <!-- Combined Auth + Config JS -->
     <script src="admin/auth.js"></script>
 </body>
