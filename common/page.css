@@ -23,10 +23,15 @@
     box-sizing: border-box;
 }
 
-/* --- Body Background --- */
+/* --- Body --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     background: linear-gradient(
         135deg,
         var(--bg-gradient-start) 0%,
