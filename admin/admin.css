@@ -1,3 +1,21 @@
+/* --- Theme Colors --- */
+:root {
+    --bg-gradient-start: #111111;
+    --bg-gradient-end: #444444;
+
+    --primary: #4a90e2;
+    --primary-hover: #357abd;
+
+    --danger: #e74c3c;
+    --danger-hover: #c0392b;
+
+    --text-main: #333333;
+    --text-muted: #666666;
+
+    --panel-bg: #ffffff;
+    --section-bg: #f2f2f2;
+}
+
 /* --- General Reset --- */
 * {
     margin: 0;
@@ -12,12 +30,16 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(
+        135deg,
+        var(--bg-gradient-start) 0%,
+        var(--bg-gradient-end) 100%
+    );
 }
 
 /* --- Password Gate --- */
 .password-gate {
-    background: white;
+    background: var(--panel-bg);
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
@@ -27,13 +49,13 @@ body {
 }
 
 .password-gate h1 {
-    color: #333;
+    color: var(--text-main);
     margin-bottom: 10px;
     font-size: 28px;
 }
 
 .password-gate p {
-    color: #666;
+    color: var(--text-muted);
     margin-bottom: 30px;
     font-size: 14px;
 }
@@ -50,13 +72,13 @@ body {
 
 .password-gate input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--primary);
 }
 
 .password-gate button {
     width: 100%;
     padding: 12px;
-    background: #667eea;
+    background: var(--primary);
     color: white;
     border: none;
     border-radius: 5px;
@@ -67,11 +89,11 @@ body {
 }
 
 .password-gate button:hover {
-    background: #764ba2;
+    background: var(--primary-hover);
 }
 
 .error-message {
-    color: #e74c3c;
+    color: var(--danger);
     margin-top: 15px;
     display: none;
     font-size: 14px;
@@ -89,7 +111,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background: white;
+    background: var(--panel-bg);
     min-height: 100vh;
 }
 
@@ -97,18 +119,18 @@ body {
     text-align: center;
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 2px solid #667eea;
+    border-bottom: 2px solid var(--primary);
 }
 
 .admin-header h1 {
-    color: #333;
+    color: var(--text-main);
     margin-bottom: 10px;
 }
 
 .logout-btn {
     display: inline-block;
     padding: 8px 16px;
-    background: #e74c3c;
+    background: var(--danger);
     color: white;
     border: none;
     border-radius: 5px;
@@ -118,18 +140,18 @@ body {
 }
 
 .logout-btn:hover {
-    background: #c0392b;
+    background: var(--danger-hover);
 }
 
 /* --- Admin Sections --- */
 .admin-section {
     margin-bottom: 30px;
     padding: 20px;
-    background: #f5f5f5;
+    background: var(--section-bg);
     border-radius: 5px;
 }
 
 .admin-section h2 {
-    color: #667eea;
+    color: var(--primary);
     margin-bottom: 15px;
 }
