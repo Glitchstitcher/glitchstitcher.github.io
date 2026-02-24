@@ -1,18 +1,21 @@
-/* --- Global Reset --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* --- Base Body Layout --- */
+/* --- Base Body Layout with Soft Side Gradient --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    /* Black edges fading into white center */
+    background: radial-gradient(
+        ellipse at center,
+        #ffffff 60%,   /* white in center */
+        #000000 100%   /* black at edges */
+    );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
-/* --- Page Wrapper --- */
+/* --- Page Container --- */
 .page-container {
     max-width: 1200px;
     margin: 0 auto;
