@@ -106,8 +106,8 @@ body {
     height: 100%;
 }
 
-/* --- Admin Content --- */
-.admin-content {
+/* --- Page Container --- */
+.page-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -115,14 +115,14 @@ body {
     min-height: 100vh;
 }
 
-.admin-header {
+.page-header {
     text-align: center;
     margin-bottom: 30px;
     padding-bottom: 20px;
     border-bottom: 2px solid var(--primary);
 }
 
-.admin-header h1 {
+.page-header h1 {
     color: var(--text-main);
     margin-bottom: 10px;
 }
@@ -143,15 +143,15 @@ body {
     background: var(--danger-hover);
 }
 
-/* --- Admin Sections --- */
-.admin-section {
+/* --- Page Sections --- */
+.page-section {
     margin-bottom: 30px;
     padding: 20px;
     background: var(--section-bg);
     border-radius: 5px;
 }
 
-.admin-section h2 {
+.page-section h2 {
     color: var(--primary);
     margin-bottom: 15px;
 }
