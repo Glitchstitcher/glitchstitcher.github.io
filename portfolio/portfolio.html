@@ -8,6 +8,7 @@
     <!-- Shared Head Defaults -->
     <link rel="stylesheet" href="/common/header.css">
     <script src="/common/header.js" defer></script>
+    <script src="/admin/auth.js" defer></script>
 
     <!-- Page Styles -->
     <link rel="stylesheet" href="/common/page.css">
@@ -17,29 +18,39 @@
     <!-- Header Injection Point -->
     <div id="header-placeholder"></div>
 
-    <!-- Page Content -->
-    <div class="page-container">
+    <!-- Password Gate -->
+    <div id="passwordGate" class="password-gate">
+        <h1></h1>
+        <p></p>
+        <input type="password" id="passwordInput" placeholder="Enter password">
+        <button class="unlock-btn" onclick="checkPassword('passwordInput', 'passwordGate', 'portfolioContent', 'errorMessage')">Submit</button>
+        <div id="errorMessage" style="display:none; color:red;"></div>
+    </div>
 
-        <div class="page-header">
-            <h1>Portfolio</h1>
-            <p>Welcome to my portfolio.</p>
+    <!-- Page Content (Hidden until password unlock) -->
+    <div id="portfolioContent" class="hidden-content" style="display:none;">
+        <div class="page-container">
+            <div class="page-header">
+                <h1>Portfolio</h1>
+                <p>Welcome to my portfolio.</p>
+            </div>
+
+            <div class="page-section">
+                <h2>Search FreeCAD Files</h2>
+                <input type="text" id="searchBox" class="search-box" placeholder="Search for .fcstd files...">
+                <div class="results-count" id="resultsCount"></div>
+                <div id="resultsList" class="results-list"></div>
+            </div>
+
+            <div class="page-section">
+                <h2>Featured Projects</h2>
+                <ul>
+                    <li><a href="manufacturing/hot-wire-cutter.html">Hot Wire Cutter</a></li>
+                    <li><a href="manufacturing/wood-briquette-press.html">Wood Briquette Press</a></li>
+                </ul>
+            </div>
+
         </div>
-
-        <div class="page-section">
-            <h2>Search FreeCAD Files</h2>
-            <input type="text" id="searchBox" class="search-box" placeholder="Search for .fcstd files...">
-            <div class="results-count" id="resultsCount"></div>
-            <div id="resultsList" class="results-list"></div>
-        </div>
-
-        <div class="page-section">
-            <h2>Featured Projects</h2>
-            <ul>
-                <li><a href="manufacturing/hot-wire-cutter.html">Hot Wire Cutter</a></li>
-                <li><a href="manufacturing/wood-briquette-press.html">Wood Briquette Press</a></li>
-            </ul>
-        </div>
-
     </div>
 
 </body>
