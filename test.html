@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Page</title>
 
     <!-- Shared Head Defaults -->
-    <script src="/common/header.js" defer></script>
-    <div id="header-placeholder"></div>
     <link rel="stylesheet" href="/common/header.css">
+    <script src="/common/header.js" defer></script>
 
     <!-- Page Styles -->
     <link rel="stylesheet" href="/common/page.css">
-
 </head>
 <body>
 
@@ -18,8 +18,11 @@
     <div id="header-placeholder"></div>
 
     <!-- Page Content -->
-    <div class="admin-content">
-        <h1>Test Page</h1>
+    <div class="page-container">
+        <div class="page-header">
+            <h1>Test Page</h1>
+        </div>
+
         <p>This page uses shared head and header systems.</p>
     </div>
 
