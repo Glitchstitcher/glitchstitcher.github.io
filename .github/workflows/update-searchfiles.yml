@@ -1,0 +1,30 @@
+name: Update searchfiles.json
+
+on:
+  push:
+    branches: [main]       # runs on pushes to main branch
+  workflow_dispatch:        # allows manual trigger
+
+jobs:
+  generate-json:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Generate searchfiles.json
+      run: node scripts/generate-search-json.js
+
+    - name: Commit searchfiles.json
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add portfolio/searchfiles.json
+        git commit -m "Update searchfiles.json [skip ci]" || echo "No changes"
+        git push
